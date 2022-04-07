@@ -243,7 +243,7 @@ def trainer(args):
                 torch.save(G.state_dict(), model_saved_path + '/G.pth')
                 torch.save(D.state_dict(), model_saved_path + '/D.pth')
 
-                samples = fake.cpu().data[:params.save_plot_instaces].squeeze().numpy()
+                samples = fake.cpu().data[:8].squeeze().numpy()
                 # print (samples.shape)
                 # image_saved_path = '../images'
 

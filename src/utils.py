@@ -49,7 +49,7 @@ def plotVoxelVisdom(voxels, visdom, title):
 
 
 def SavePloat_Voxels(voxels, path, iteration):
-    voxels = voxels[:params.save_plot_instaces].__ge__(0.5)
+    voxels = voxels[:8].__ge__(0.5)
     fig = plt.figure(figsize=(32, 16))
     gs = gridspec.GridSpec(2, 4)
     gs.update(wspace=0.05, hspace=0.05)
