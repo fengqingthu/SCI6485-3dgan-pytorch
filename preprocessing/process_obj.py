@@ -2,6 +2,8 @@
 # 3d dataset preprocessing for 3dgan dataset
 # voxelize and convert obj files to mat files
 # For MacOs 10.10 above, please install XQuatz
+
+# First, command: chmod 755 binvox
 # Example: python3 process_obj.py 64 ../dataset/A_NormalClothes
 
 import os
