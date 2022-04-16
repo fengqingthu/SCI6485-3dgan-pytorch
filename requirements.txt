@@ -3,5 +3,3 @@ torchvision == 0.7.0
 tensorboardX == 2.1
 matplotlib == 2.1
 visdom
-open3d
-scipy

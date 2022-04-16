@@ -26,6 +26,7 @@ def peekDataset(path):
             ax.scatter(x, y, z, zdir='z', c='red')
             plt.savefig('../peek/{}.png'.format(file[:-4]), bbox_inches='tight')
             plt.close()
+        print(f"---------- peek {file} ----------\n")
       
 def main(path):
     os.system("mkdir ../peek")
