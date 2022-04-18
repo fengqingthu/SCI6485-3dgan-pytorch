@@ -99,10 +99,10 @@ def trainer(args):
     D.to(params.device)
     G.to(params.device)
 
-    # criterion_D = nn.BCELoss()
-    criterion_D = nn.MSELoss()
-    # criterion_G = nn.BCELoss()
-    criterion_G = nn.L1Loss()
+    criterion_D = nn.BCELoss()
+    # criterion_D = nn.MSELoss()
+    criterion_G = nn.BCELoss()
+    # criterion_G = nn.L1Loss()
 
     itr_val = -1
     itr_train = -1
@@ -231,7 +231,7 @@ def trainer(args):
             end = time.time()
             epoch_time = end - start
 
-            print('Epoch-{} ({}) , D(x) : {:.4}, D(G(x)) : {:.4}, Adv_loss: {:.4}'.format(epoch, phase, epoch_loss_D, epoch_loss_adv_G, epoch_loss_adv_G))
+            print('Epoch-{} ({}) , D(x) : {:.4}, D(G(x)) : {:.4}'.format(epoch, phase, epoch_loss_D, epoch_loss_adv_G))
             print('Elapsed Time: {:.4} min'.format(epoch_time / 60.0))
 
             if (epoch + 1) % params.model_save_step == 0:
