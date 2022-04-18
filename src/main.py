@@ -6,7 +6,6 @@ Welcome, this is the entrance to 3dgan
 
 import argparse
 from trainer import trainer
-import torch
 
 from tester import tester
 import params

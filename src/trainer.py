@@ -68,10 +68,7 @@ def trainer(args):
             os.makedirs(model_saved_path)
 
     # datset define
-    # dsets_path = args.input_dir + args.data_dir + "train/"
     dsets_path = params.data_dir + params.model_dir + "64/train/"
-    # if params.cube_len == 64:
-    #     dsets_path = params.data_dir + params.model_dir + "30/train64/"
 
     print(dsets_path)  # ../volumetric_data/chair/30/train/
 
@@ -84,17 +81,14 @@ def trainer(args):
 
     dset_len = {"train": len(train_dsets)}
     dset_loaders = {"train": train_dset_loaders}
-    # print (dset_len["train"])
 
     # model define
     D = net_D(args)
     G = net_G(args)
 
-    # print total number of parameters in a model
-    # x = sum(p.numel() for p in G.parameters() if p.requires_grad)
-    # print (x)
-    # x = sum(p.numel() for p in D.parameters() if p.requires_grad)
-    # print (x)
+    # load pretrained model
+    if params.pretrained_dir and os.path.exists(params.pretrained_dir+"G.pth"):
+        G.load_state_dict(torch.load(params.pretrained_dir + "G.pth"))
 
     D_solver = optim.Adam(D.parameters(), lr=params.d_lr, betas=params.beta)
     # D_solver = optim.SGD(D.parameters(), lr=args.d_lr, momentum=0.9)
@@ -103,10 +97,10 @@ def trainer(args):
     D.to(params.device)
     G.to(params.device)
 
-    # criterion_D = nn.BCELoss()
-    criterion_D = nn.MSELoss()
-
-    criterion_G = nn.L1Loss()
+    criterion_D = nn.BCELoss()
+    # criterion_D = nn.MSELoss()
+    criterion_G = nn.BCELoss()
+    # criterion_G = nn.L1Loss()
 
     itr_val = -1
     itr_train = -1
@@ -235,7 +229,7 @@ def trainer(args):
             end = time.time()
             epoch_time = end - start
 
-            print('Epoch-{} ({}) , D(x) : {:.4}, D(G(x)) : {:.4}'.format(epoch, phase, epoch_loss_D, epoch_loss_adv_G))
+            print('Epoch-{} ({}) , D(x) : {:.4}, D(G(x)) : {:.4}, Adv_loss: {:.4}'.format(epoch, phase, epoch_loss_D, epoch_loss_adv_G, epoch_loss_adv_G))
             print('Elapsed Time: {:.4} min'.format(epoch_time / 60.0))
 
             if (epoch + 1) % params.model_save_step == 0:

@@ -25,7 +25,9 @@ bias = False
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 data_dir = '../volumetric_data/'
 model_dir = 'cloth/'  # change it to train on other data models
-output_dir = '../outputs'
+# output_dir = '../outputs'
+output_dir = '../../gdrive/MyDrive/SCI6485/outputs'
+pretrianed_dir = '../model/'
 # images_dir = '../test_outputs'
 
 

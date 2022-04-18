@@ -41,23 +41,16 @@ class net_G(torch.nn.Module):
             torch.nn.ConvTranspose3d(input_dim, output_dim, kernel_size=kernel_size, stride=stride, bias=bias, padding=padding),
             torch.nn.BatchNorm3d(output_dim),
             torch.nn.ReLU(True)
-            # torch.nn.LeakyReLU(self.leak_value, True)
         )
         return layer
 
     def forward(self, x):
         out = x.view(-1, self.z_dim, 1, 1, 1)
-        # print(out.size())  # torch.Size([32, 200, 1, 1, 1])
         out = self.layer1(out)
-        # print(out.size())  # torch.Size([32, 256, 2, 2, 2])
         out = self.layer2(out)
-        # print(out.size())  # torch.Size([32, 128, 4, 4, 4])
         out = self.layer3(out)
-        # print(out.size())  # torch.Size([32, 64, 8, 8, 8])
         out = self.layer4(out)
-        # print(out.size())  # torch.Size([32, 32, 16, 16, 16])
         out = self.layer5(out)
-        # print(out.size())  # torch.Size([32, 1, 32, 32, 32])
         out = torch.squeeze(out)
         return out
 
@@ -86,10 +79,6 @@ class net_D(torch.nn.Module):
             torch.nn.Sigmoid()
         )
 
-        # self.layer5 = torch.nn.Sequential(
-        #     torch.nn.Linear(256*2*2*2, 1),
-        #     torch.nn.Sigmoid()
-        # )
 
     def conv_layer(self, input_dim, output_dim, kernel_size=4, stride=2, padding=(1,1,1), bias=False):
         layer = torch.nn.Sequential(
@@ -100,21 +89,12 @@ class net_D(torch.nn.Module):
         return layer
 
     def forward(self, x):
-        # out = torch.unsqueeze(x, dim=1)
         out = x.view(-1, 1, self.cube_len, self.cube_len, self.cube_len)
-        # print(out.size()) # torch.Size([32, 1, 32, 32, 32])
         out = self.layer1(out)
-        # print(out.size())  # torch.Size([32, 32, 16, 16, 16])
         out = self.layer2(out)
-        # print(out.size())  # torch.Size([32, 64, 8, 8, 8])
         out = self.layer3(out)
-        # print(out.size())  # torch.Size([32, 128, 4, 4, 4])
         out = self.layer4(out)
-        # print(out.size())  # torch.Size([32, 256, 2, 2, 2])
-        # out = out.view(-1, 256*2*2*2)
-        # print (out.size())
         out = self.layer5(out)
-        # print(out.size())  # torch.Size([32, 1, 1, 1, 1])
         out = torch.squeeze(out)
         return out
 

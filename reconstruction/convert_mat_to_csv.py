@@ -6,7 +6,7 @@ import numpy as np
 def main():
     args = sys.argv[1:]
     cube_len = int(args[0])
-    vsize = 1/cube_len
+    vsize = 1/cube_len*200
 
     dir = args[1]
     odir = dir + "_csv"
@@ -20,19 +20,18 @@ def main():
             if not mat_file.endswith(".mat"):
                 continue
             path = dir + "/" + mat_file
-            print(path)
             voxels = io.loadmat(path)['instance']
-            print(voxels)
             data = []
-
+            index = 0
             for x in range(cube_len):
                 for y in range(cube_len):
                     for z in range(cube_len):
                         if voxels[x,y,z]:
-                            data.append((x*vsize, y*vsize, z*vsize))
+                            data.append((index, x*vsize, y*vsize, z*vsize))
+                            index += 1
             
             data = np.array(data)
-            np.savetxt(odir + "/" + mat_file[:-3] + "csv", data)
+            np.savetxt(odir + "/" + mat_file[:-3] + "csv", data, fmt = '%.15f')
             print(f"---------- Processed {mat_file} ----------")
     
     except:
