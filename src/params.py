@@ -27,7 +27,7 @@ data_dir = '../volumetric_data/'
 model_dir = 'cloth/'  # change it to train on other data models
 # output_dir = '../outputs'
 output_dir = '../../gdrive/MyDrive/SCI6485/outputs'
-pretrianed_dir = '../model/'
+pretrained_dir = '../model/'
 # images_dir = '../test_outputs'
 
 

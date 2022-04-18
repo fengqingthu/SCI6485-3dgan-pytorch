@@ -88,7 +88,7 @@ def trainer(args):
 
     # load pretrained model
     if params.pretrained_dir and os.path.exists(params.pretrained_dir+"G.pth"):
-        G = torch.load(params.pretrained_dir + "G.pth")
+        G.load_state_dict(torch.load(params.pretrained_dir + "G.pth"))
 
     D_solver = optim.Adam(D.parameters(), lr=params.d_lr, betas=params.beta)
     # D_solver = optim.SGD(D.parameters(), lr=args.d_lr, momentum=0.9)
@@ -97,10 +97,10 @@ def trainer(args):
     D.to(params.device)
     G.to(params.device)
 
-    criterion_D = nn.BCELoss()
-    # criterion_D = nn.MSELoss()
-    criterion_G = nn.BCELoss()
-    # criterion_G = nn.L1Loss()
+    # criterion_D = nn.BCELoss()
+    criterion_D = nn.MSELoss()
+    # criterion_G = nn.BCELoss()
+    criterion_G = nn.L1Loss()
 
     itr_val = -1
     itr_train = -1
