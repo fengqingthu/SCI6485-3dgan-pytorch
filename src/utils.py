@@ -6,6 +6,7 @@ Some utility functions
 
 '''
 
+from random import sample
 import scipy.ndimage as nd
 import scipy.io as io
 import matplotlib
@@ -23,8 +24,7 @@ from torch.utils import data
 from torch.autograd import Variable
 import torch
 import os
-import pickle
-
+import scipy.io as io
 
 def getVoxelFromMat(path, cube_len=64):
     if cube_len == 32:
@@ -66,6 +66,9 @@ def SavePloat_Voxels(voxels, path, iteration):
     plt.savefig(path + '/{}.png'.format(str(iteration).zfill(3)), bbox_inches='tight')
     plt.close()
 
+def SaveMat_Voxels(voxels, path, iteration):
+    data = voxels[0].__ge__(0.5).astype(int)
+    io.savemat(path + '/{}.mat'.format(str(iteration).zfill(3)), {'instance': data})
 
 class ShapeNetDataset(data.Dataset):
 

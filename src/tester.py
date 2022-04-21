@@ -4,6 +4,7 @@ tester.py
 Test the trained 3dgan models
 '''
 
+from random import sample
 import torch
 from torch import optim
 from torch import nn
@@ -42,6 +43,10 @@ def tester(args):
     image_saved_path = params.output_dir + '/' + args.model_name + '/' + args.logs + '/test_outputs'
     if not os.path.exists(image_saved_path):
         os.makedirs(image_saved_path)
+    
+    mat_saved_path = params.output_dir + '/test_outputs_mat'
+    if not os.path.exists(mat_saved_path):
+        os.makedirs(mat_saved_path)
 
     if args.use_visdom:
         vis = visdom.Visdom()
@@ -88,13 +93,14 @@ def tester(args):
         samples = fake.unsqueeze(dim=0).detach().cpu().numpy()
         # print (samples.shape)
         # print (fake)
-        y_prob = D(fake)
-        y_real = torch.ones_like(y_prob)
+        # y_prob = D(fake)
+        # y_real = torch.ones_like(y_prob)
         # criterion = nn.BCELoss()
         # print (y_prob.item(), criterion(y_prob, y_real).item())
 
         # visualization
         if not args.use_visdom:
-            SavePloat_Voxels(samples, image_saved_path, 'tester_' + str(i))  # norm_
+            # SavePloat_Voxels(samples, image_saved_path, 'tester_' + str(i))
+            SaveMat_Voxels(samples, mat_saved_path, 'test_' + str(i))
         else:
             plotVoxelVisdom(samples[0, :], vis, "tester_" + str(i))
